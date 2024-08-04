@@ -38,16 +38,16 @@ export default function SendToMessageForm({
       });
 
       const result = await response.json();
+
       if (response.ok) {
-        console.log("Success:", result);
         alert("메시지 전송 성공: " + JSON.stringify(result));
       } else {
-        console.error("Error:", result);
         alert("메시지 전송 실패: " + JSON.stringify(result));
       }
     } catch (error) {
-      console.error("Fetch error:", error);
       alert("Fetch error: " + JSON.stringify(error));
+    } finally {
+      setEnteredText("");
     }
   };
 
@@ -60,6 +60,8 @@ export default function SendToMessageForm({
         className="border p-4 rounded-md"
         placeholder="나에게 보낼 텍스트를 작성해주세요"
         onChange={(e) => setEnteredText(e.target.value)}
+        value={enteredText}
+        required
       />
       <button className="border p-4 rounded-md">메시지 보내기</button>
     </form>
