@@ -1,5 +1,5 @@
 import { auth, signIn, signOut } from "@/auth";
-import SendToMessageButton from "@/components/SendToMessageButton";
+import SendToMessageButton from "@/components/SendToMessageForm";
 
 export default async function Home() {
   const session = await auth();
@@ -30,8 +30,8 @@ export default async function Home() {
             로그아웃
           </button>
         </form>
-        <SendToMessageButton accessToken={session?.accessToken} />
       </div>
+      <SendToMessageButton accessToken={session?.accessToken} />
     </section>
   );
 }
