@@ -1,18 +1,24 @@
 "use client";
 
-type SendToMessageButtonProps = {
+import { FormEvent, useState } from "react";
+
+type SendToMessageFormProps = {
   accessToken: string | undefined;
 };
 
-export default function SendToMessageButton({
+export default function SendToMessageForm({
   accessToken,
-}: SendToMessageButtonProps) {
-  const sendToMe = async () => {
+}: SendToMessageFormProps) {
+  const [enteredText, setEnteredText] = useState("");
+
+  const sendToMe = async (e: FormEvent) => {
+    e.preventDefault();
+
     const url = "https://kapi.kakao.com/v2/api/talk/memo/default/send";
     const data = {
       template_object: JSON.stringify({
         object_type: "text",
-        text: "텍스트 영역입니다. 최대 200자 표시 가능합니다.",
+        text: enteredText,
         link: {
           web_url: process.env.NEXT_PUBLIC_BASE_URL,
           mobile_web_url: process.env.NEXT_PUBLIC_BASE_URL,
@@ -46,8 +52,16 @@ export default function SendToMessageButton({
   };
 
   return (
-    <button className="border p-4 rounded-md" onClick={sendToMe}>
-      메시지 보내기
-    </button>
+    <form
+      onSubmit={sendToMe}
+      className="border rounded-md p-4 flex flex-col gap-4 w-80"
+    >
+      <input
+        className="border p-4 rounded-md"
+        placeholder="나에게 보낼 텍스트를 작성해주세요"
+        onChange={(e) => setEnteredText(e.target.value)}
+      />
+      <button className="border p-4 rounded-md">메시지 보내기</button>
+    </form>
   );
 }
