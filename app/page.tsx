@@ -30,7 +30,7 @@ export default async function Home() {
             로그아웃
           </button>
         </form>
-        <SendToMessageButton />
+        <SendToMessageButton accessToken={session?.accessToken} />
       </div>
     </section>
   );

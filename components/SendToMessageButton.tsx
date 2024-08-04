@@ -1,8 +1,15 @@
 "use client";
 
-export default function SendToMessageButton() {
+type SendToMessageButtonProps = {
+  accessToken: string | undefined;
+};
+
+export default function SendToMessageButton({
+  accessToken,
+}: SendToMessageButtonProps) {
   const sendToMe = () => {
     const { Kakao } = window;
+    Kakao.Auth.setAccessToken(accessToken);
 
     Kakao.API.request({
       url: "/v2/api/talk/memo/default/send",
